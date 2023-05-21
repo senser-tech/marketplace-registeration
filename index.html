@@ -88,8 +88,8 @@
             color: #333333;
         }
 
-        .required-field{
-            padding-left: 15px !important;
+        .required-field {
+            padding-left: 25px !important;
         }
 
         .input-container {
@@ -97,11 +97,24 @@
             position: relative;
     }
 
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #A0A0A0;
+        opacity: 1; /* Firefox */
+        }
+
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #A0A0A0;
+        }
+
+        ::-ms-input-placeholder { /* Microsoft Edge */
+        color: #A0A0A0;
+        }
+
 
     .asterisk {
         position: absolute;
-        top: 17px;
-        left: 5px;
+        top: 15px;
+        left: 14px;
         color: red;
         margin-right: 5px;
      }
