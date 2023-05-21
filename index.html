@@ -110,18 +110,117 @@
         color: #A0A0A0;
         }
 
+        .asterisk {
+            position: absolute;
+            top: 15px;
+            left: 14px;
+            color: red;
+            margin-right: 5px;
+        }
 
-    .asterisk {
-        position: absolute;
-        top: 15px;
-        left: 14px;
-        color: red;
-        margin-right: 5px;
-     }
+        .loader-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #1B76EC;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+
+        .loader-container.loading {
+            display: flex;
+        }
+
+        .form-header.loading {
+            display: none;
+        }
+
+        .form-container.loading {
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); } /* Start position */
+            100% { transform: rotate(360deg); } /* End position */
+        }
+
+        .thankyou-header {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+        
+        .thankyou-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+     
+        .thankyou-container .line-1 {
+            font-family: 'Mulish';
+            font-size: 28px;
+            line-height: 150%;
+            text-align: center;
+            color: #333333;
+            width: 60%;
+            margin-top: 40px;
+        }
+      
+        .thankyou-container .line-2 {
+            font-family: 'Mulish';
+            font-size: 28px;
+            line-height: 150%;
+            text-align: center;
+            color: #333333;
+            margin-top: 40px;
+        }
+        
+        .thankyou-container img {
+            width: 75%;
+            margin-top: 20px;
+        }
+        
+        .thankyou-header.show {
+            display: flex;
+        }
+        
+        .thankyou-container.show {
+            display: flex;
+        }
     </style>
+    <script>
+        function submitForm() {
+            const loader = document.querySelector('.loader-container');
+            loader.classList.add('loading');
+            const formHeader = document.querySelector('.form-header');
+            formHeader.classList.add('loading');
+            const formContainer = document.querySelector('.form-container');
+            formContainer.classList.add('loading');
+            setTimeout(() => {
+                loader.classList.remove('loading');
+                const thankYouHeader = document.querySelector('.thankyou-header');
+                const thankYouContainer = document.querySelector('.thankyou-container');
+                thankYouHeader.classList.add('show');
+                thankYouContainer.classList.add('show');
+            }, 500);
+            }
+      </script>
 </head>
 <body>
     <div class="landing-page">
+        <div class="loader-container">
+            <div class="loader"></div>
+        </div>
         <div class="form-header">
             <img src="assets/img/logo.svg" alt="Senser">
             <h2>Complete your AWS Marketplace Subscription</h2>
@@ -143,7 +242,15 @@
                 <input type="text" id="lastName" required placeholder="Last Name" class="required-field">
                 <span class="asterisk">*</span>
             </div>
-            <button type="submit">Complete Subscription</button>
+            <button type="submit" id="submit" onclick="submitForm()">Complete Subscription</button>
+        </div>
+        <div class="thankyou-header">
+            <img src="assets/img/logo.svg" alt="Senser">
+        </div>
+        <div class="thankyou-container">
+            <div class="line-1">Thank you for subscribing!</div>
+            <div class="line-2">We will contact you soon</div>
+            <img src="assets/img/thank-you.svg" alt="Thank You">
         </div>
     </div>
 </body>
