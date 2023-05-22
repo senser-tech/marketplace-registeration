@@ -2,6 +2,9 @@
 <html>
 <head>
     <link href="assets/css/style.css" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <title>Landing Page</title>
     <style type="text/css">
         @font-face {
@@ -29,6 +32,8 @@
             font-family: 'Mulish';
             background-image: url('assets/img/landing-page-background.svg');
             background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .form-container {
@@ -38,7 +43,14 @@
             box-shadow: 4px 4px 30px rgba(0, 9, 0, 0.1);
             border-radius: 8px;
             padding: 20px;
+            position: absolute;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media screen and (max-device-width: 900px) {
+            .form-container {
+               scale: 2;
+            }
         }
 
         .form-content {
@@ -195,7 +207,7 @@
             color: red;
             position: absolute;
             align-items: center;
-            top: 36%;
+            top: 120px;
         }
         
         .show {
@@ -217,15 +229,15 @@
             const missingError = document.querySelector('.error.missing');
             missingError.classList.remove('show');
             const email = document.getElementById('email');
-            if (!validateEmail(email?.value)) {
-                emailError.classList.add('show');
-                return;
-            }
             const orgName = document.getElementById('orgName');
             const firstName = document.getElementById('firstName');
             const lastName = document.getElementById('lastName');
-            if (!orgName?.value || !firstName?.value || !lastName?.value) {
+            if (!orgName?.value || !firstName?.value || !lastName?.value || !email?.value) {
                 missingError.classList.add('show');
+                return;
+            }
+            if (!validateEmail(email?.value)) {
+                emailError.classList.add('show');
                 return;
             }
             const name = `${firstName?.value} ${lastName?.value}`;
