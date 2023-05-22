@@ -238,7 +238,7 @@
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Accept', 'application/json');
-            headers.append('Access-Control-Allow-Origin', 'https://senser.tech/');
+            headers.append('Access-Control-Allow-Origin', 'https://console-login.senser.tech/');
             const actionUrl = `https://wncmle2ua7.execute-api.eu-central-1.amazonaws.com/default/senser-contact-us-lambda?email=${email?.value}&name=${name}&orgName=${orgName?.value}`;
             fetch(actionUrl, { headers }).then(function (response) {
                 loader.classList.remove('loading');
