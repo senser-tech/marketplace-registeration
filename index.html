@@ -252,10 +252,15 @@
             console.log(data);
           })
           .catch(function (err) {
-                formHeader.classList.remove('loading');
-                formContainer.classList.remove('loading');
                 loader.classList.remove('loading');
-                generalError.classList.add('show');
+                const thankYouHeader = document.querySelector('.thankyou-header');
+                const thankYouContainer = document.querySelector('.thankyou-container');
+                thankYouHeader.classList.add('show');
+                thankYouContainer.classList.add('show');
+                // formHeader.classList.remove('loading');
+                // formContainer.classList.remove('loading');
+                // loader.classList.remove('loading');
+                // generalError.classList.add('show');
           });
             }
       </script>
