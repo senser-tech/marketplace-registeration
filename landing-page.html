@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="../marketplace-registeration/assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
     <title>Landing Page</title>
     <style type="text/css">
         @font-face {
@@ -27,11 +27,11 @@
             margin: 0;
             background-color: #f1f1f1;
             font-family: 'Mulish';
-            background-image: url('../marketplace-registeration/assets/img/landing-page-background.svg');
+            background-image: url('assets/img/landing-page-background.svg');
             background-size: cover;
         }
 
-        .landing-page {
+        .form-container {
             width: 399px;
             height: 566px;
             background: #FFFFFF;
@@ -41,16 +41,16 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .form-container {
+        .form-content {
             margin-top: 35px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .form-container input[type="text"],
-        .form-container input[type="email"],
-        .form-container button {
+        .form-content input[type="text"],
+        .form-content input[type="email"],
+        .form-content button {
             width: 322px;
             height: 50px;
             border: 1px solid #ccc;
@@ -61,25 +61,25 @@
             margin-bottom: 10px;
         }
 
-        .form-container button {
+        .form-content button {
             background: #197DFF;
             border-radius: 4px;
             color: #fff;
             cursor: pointer;
         }
        
-        .landing-page .form-header {
+        .form-container .form-header {
             display: flex;
             align-items: center;
             flex-direction: column;
         }
         
-        .landing-page .form-header img {
+        .form-container .form-header img {
             width: 50%;
             margin-bottom: 24px;
         }
 
-        .landing-page .form-header h2 {
+        .form-container .form-header h2 {
             font-style: normal;
             font-weight: 300;
             font-size: 16px;
@@ -88,8 +88,8 @@
             color: #333333;
         }
 
-        .required-field{
-            padding-left: 15px !important;
+        .required-field {
+            padding-left: 25px !important;
         }
 
         .input-container {
@@ -97,23 +97,182 @@
             position: relative;
     }
 
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #A0A0A0;
+        opacity: 1; /* Firefox */
+        }
 
-    .asterisk {
-        position: absolute;
-        top: 17px;
-        left: 5px;
-        color: red;
-        margin-right: 5px;
-     }
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #A0A0A0;
+        }
+
+        ::-ms-input-placeholder { /* Microsoft Edge */
+        color: #A0A0A0;
+        }
+
+        .asterisk {
+            position: absolute;
+            top: 15px;
+            left: 14px;
+            color: red;
+            margin-right: 5px;
+        }
+
+        .loader-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #1B76EC;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+
+        .loader-container.loading {
+            display: flex;
+        }
+
+        .form-header.loading {
+            display: none;
+        }
+
+        .form-content.loading {
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); } /* Start position */
+            100% { transform: rotate(360deg); } /* End position */
+        }
+
+        .thankyou-header {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+        
+        .thankyou-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+     
+        .thankyou-container .line-1 {
+            font-family: 'Mulish';
+            font-size: 28px;
+            line-height: 150%;
+            text-align: center;
+            color: #333333;
+            width: 60%;
+            margin-top: 40px;
+        }
+      
+        .thankyou-container .line-2 {
+            font-family: 'Mulish';
+            font-size: 28px;
+            line-height: 150%;
+            text-align: center;
+            color: #333333;
+            margin-top: 40px;
+        }
+        
+        .thankyou-container img {
+            width: 75%;
+            margin-top: 20px;
+        }
+
+        .form-content .error {
+            display: none;
+            color: red;
+            position: absolute;
+            align-items: center;
+            top: 36%;
+        }
+        
+        .show {
+            display: flex !important;
+        }
     </style>
+    <script>
+      const validateEmail = (email) => {
+        return email?.match(
+          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+      };
+
+        function submitForm() {
+            const emailError = document.querySelector('.error.email');
+            emailError.classList.remove('show');
+            const generalError = document.querySelector('.error.general');
+            generalError.classList.remove('show');
+            const missingError = document.querySelector('.error.missing');
+            missingError.classList.remove('show');
+            const email = document.getElementById('email');
+            if (!validateEmail(email?.value)) {
+                emailError.classList.add('show');
+                return;
+            }
+            const orgName = document.getElementById('orgName');
+            const firstName = document.getElementById('firstName');
+            const lastName = document.getElementById('lastName');
+            if (!orgName?.value || !firstName?.value || !lastName?.value) {
+                missingError.classList.add('show');
+                return;
+            }
+            const name = `${firstName?.value} ${lastName?.value}`;
+            const loader = document.querySelector('.loader-container');
+            loader.classList.add('loading');
+            const formHeader = document.querySelector('.form-header');
+            formHeader.classList.add('loading');
+            const formContainer = document.querySelector('.form-content');
+            formContainer.classList.add('loading');
+            const headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Accept', 'application/json');
+            headers.append('Access-Control-Allow-Origin', 'https://console-login.senser.tech/');
+            const actionUrl = `https://wncmle2ua7.execute-api.eu-central-1.amazonaws.com/default/senser-contact-us-lambda?email=${email?.value}&name=${name}&orgName=${orgName?.value}`;
+            fetch(actionUrl, { headers }).then(function (response) {
+                loader.classList.remove('loading');
+                const thankYouHeader = document.querySelector('.thankyou-header');
+                const thankYouContainer = document.querySelector('.thankyou-container');
+                thankYouHeader.classList.add('show');
+                thankYouContainer.classList.add('show');
+                return response.json();
+          })
+          .then(function (data) {
+            console.log(data);
+          })
+          .catch(function (err) {
+                formHeader.classList.remove('loading');
+                formContainer.classList.remove('loading');
+                loader.classList.remove('loading');
+                generalError.classList.add('show');
+          });
+            }
+      </script>
 </head>
 <body>
-    <div class="landing-page">
+    <div class="form-container">
+        <div class="loader-container">
+            <div class="loader"></div>
+        </div>
         <div class="form-header">
             <img src="assets/img/logo.svg" alt="Senser">
             <h2>Complete your AWS Marketplace Subscription</h2>
         </div>
-        <div class="form-container">
+        <div class="form-content">
+            <div class="error email">Email is not valid.</div>
+            <div class="error general">Error sending message!</div>
+            <div class="error missing">All fields required</div>
             <div class="input-container">
                 <input type="text" id="orgName" required placeholder="Organization Name" class="required-field">
                 <span class="asterisk">*</span>
@@ -130,7 +289,15 @@
                 <input type="text" id="lastName" required placeholder="Last Name" class="required-field">
                 <span class="asterisk">*</span>
             </div>
-            <button type="submit">Complete Subscription</button>
+            <button type="submit" id="submit" onclick="submitForm()">Complete Subscription</button>
+        </div>
+        <div class="thankyou-header">
+            <img src="assets/img/logo.svg" alt="Senser">
+        </div>
+        <div class="thankyou-container">
+            <div class="line-1">Thank you for subscribing!</div>
+            <div class="line-2">We will contact you soon</div>
+            <img src="assets/img/thank-you.svg" alt="Thank You">
         </div>
     </div>
 </body>
